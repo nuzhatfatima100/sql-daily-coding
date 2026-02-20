@@ -3,7 +3,18 @@
 𝟭) 𝗙𝗶𝗹𝘁𝗲𝗿𝗶𝗻𝗴, 𝗖𝗼𝗻𝗱𝗶𝘁𝗶𝗼𝗻𝘀 𝗮𝗻𝗱 𝗣𝗮𝘁𝘁𝗲𝗿𝗻𝘀
 
 595: Big Countries https://lnkd.in/eYETxzSE
+select name, population, area 
+from World 
+where area>= 3000000 
+or population>= 25000000;
+
 620: Not Boring Movies https://lnkd.in/ew4VVfP4
+select *
+from Cinema 
+where id%2!=0 
+and description !='boring'
+order by rating desc
+
 610: Triangle Judgement https://lnkd.in/eVuQ-8bj
 619: Biggest Single Number https://lnkd.in/ev8gacJx
 180: Consecutive Numbers https://lnkd.in/eEbQXgRK
@@ -36,5 +47,12 @@
 1070: Product Sales Analysis III https://lnkd.in/e9m_dNgi
 
 ---
+180. Consecutive Numbers
+soln. 
+with cte as (select *, lead(num,1) over (order by id) as l1,
+lead(num,2,0) over (order by id) as l2
+from logs)
 
+select num as ConsecutiveNums from cte 
+where num=l1 & l1=l2
 
