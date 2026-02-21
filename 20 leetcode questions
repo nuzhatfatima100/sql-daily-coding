@@ -49,7 +49,7 @@ where e.salary>m.salary;
 select class
 from courses 
 group by class 
-having count(*) >=5
+having count(*) >=5;
 
 𝟯) 𝗔𝗴𝗴𝗿𝗲𝗴𝗮𝘁𝗶𝗼𝗻𝘀 & 𝗿𝗮𝗻𝗸𝗶𝗻𝗴
 
