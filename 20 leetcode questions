@@ -23,10 +23,33 @@ order by rating desc
 𝟮) 𝗝𝗼𝗶𝗻𝘀 & 𝗿𝗲𝗹𝗮𝘁𝗶𝗼𝗻𝘀𝗵𝗶𝗽𝘀
 
 175: Combine Two Tables https://lnkd.in/e5zQbywn
+select firstName, lastName, city, state 
+from person left join address 
+on person.personId=address.personId;
+
 183: Customers Who Never Order https://lnkd.in/e3QMqNaj
+select c.name as customers
+from customers c left join 
+orders o on c.id=o.customerId
+where o.id is null;
+
 584: Find Customer Referee https://lnkd.in/eFM6iZGk
+select name
+from customer 
+where referee_id !=2 or referee_id is null;
+
 181: Employees Earning More Than Managers https://lnkd.in/eJMtSWs9
+
+select e.name as Employee from 
+employee e  left join 
+employee m on m.id=e.managerId
+where e.salary>m.salary; 
+
 596: Classes More Than 5 Students https://lnkd.in/eeipjVph
+select class
+from courses 
+group by class 
+having count(*) >=5
 
 𝟯) 𝗔𝗴𝗴𝗿𝗲𝗴𝗮𝘁𝗶𝗼𝗻𝘀 & 𝗿𝗮𝗻𝗸𝗶𝗻𝗴
 
