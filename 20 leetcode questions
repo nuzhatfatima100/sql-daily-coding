@@ -78,4 +78,9 @@ from logs)
 
 select num as ConsecutiveNums from cte 
 where num=l1 & l1=l2
-
+----
+1148 
+select distinct author_id as id 
+from views 
+where author_id=viewer_id
+order by author_id asc
