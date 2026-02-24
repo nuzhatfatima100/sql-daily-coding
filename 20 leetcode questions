@@ -91,3 +91,10 @@ from tweets
 group by tweet_id)
 select tweet_id 
 from cte where cnt>15
+
+---
+1378. Replace Employee ID With The Unique Identifier
+select coalesce(unique_id,null) as unique_id, name
+from employees e 
+left join employeeUNI as uni 
+on e.id=uni.id
