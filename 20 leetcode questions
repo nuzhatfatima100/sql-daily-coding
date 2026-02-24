@@ -84,3 +84,10 @@ select distinct author_id as id
 from views 
 where author_id=viewer_id
 order by author_id asc
+---
+1683
+with cte as (select tweet_id,char_length(content) as cnt 
+from tweets 
+group by tweet_id)
+select tweet_id 
+from cte where cnt>15
