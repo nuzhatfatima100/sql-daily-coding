@@ -19,3 +19,22 @@ select player_id, min(event_date) as first_login
 from activity 
 group by player_id) as a left join activity b on 
 a.player_id=b.player_id and b.event_date=DATE_ADD(a.first_login, INTERVAL 1 DAY)
+
+------------
+1070. Product Sales Analysis III
+
+with cte as(
+select 
+    product_id, 
+    min(year) as first_year 
+from sales
+group by product_id)
+select 
+    cte.product_id,
+    cte.first_year,
+    sales.quantity,
+    sales.price
+from cte left join sales 
+on 
+cte.product_id = sales.product_id and 
+cte.first_year=sales.year ;
