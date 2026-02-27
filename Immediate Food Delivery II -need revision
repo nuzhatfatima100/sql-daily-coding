@@ -1,0 +1,13 @@
+1174. Immediate Food Delivery II
+ output - percentage of immediate orders in the first orders of all customers, rounded to 2 decimal places.
+
+#cal - immediate orders =order_date = customer_pref_delivery_date,
+# first order = min(order_date)
+
+with cte as (
+select *, row_number() over (partition by customer_id order by order_date) as rn 
+from delivery
+)
+select round(100*avg(order_date=customer_pref_delivery_date),2) as immediate_percentage  
+from cte 
+where rn =1
