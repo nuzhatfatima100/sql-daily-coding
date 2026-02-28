@@ -54,3 +54,15 @@ from logs)
 select num from cte 
 where num=l1 and l1=l2
 
+-----------
+1204. Last Person to Fit in the Bus
+with cte as (
+select person_id,person_name,turn ,
+sum(weight) over (order by turn) as running_total
+from queue)
+SELECT person_name
+FROM cte
+where running_total<=1000
+ORDER BY turn DESC
+LIMIT 1;
+
