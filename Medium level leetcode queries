@@ -44,3 +44,13 @@ cte.first_year=sales.year ;
 SELECT  customer_id FROM Customer GROUP BY customer_id
 HAVING COUNT(distinct product_key) = (SELECT COUNT(product_key) FROM Product)
 
+-----------
+180. Three consecutive number 
+
+with cte as(
+select num, lead(num,1) over (order by id) as l1,
+lead(num,2) over (order by id) as l2
+from logs)
+select num from cte 
+where num=l1 and l1=l2
+
