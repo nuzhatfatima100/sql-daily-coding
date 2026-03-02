@@ -4,3 +4,18 @@ with cte as (select employee_id,manager_id from employees
 where salary <30000) 
 select employee_id from cte where manager_id not in (select employee_id from employees )
 order by employee_id
+
+-----
+
+1731. The Number of Employees Which Report to Each Employee
+
+SELECT 
+  mgr.employee_id, 
+  mgr.name, 
+  COUNT(emp.employee_id) AS reports_count, 
+  ROUND(AVG(emp.age)) AS average_age
+FROM 
+  employees emp 
+  JOIN employees mgr ON emp.reports_to = mgr.employee_id 
+GROUP BY employee_id
+ORDER BY employee_id
