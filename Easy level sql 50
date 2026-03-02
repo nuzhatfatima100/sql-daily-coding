@@ -19,3 +19,19 @@ FROM
   JOIN employees mgr ON emp.reports_to = mgr.employee_id 
 GROUP BY employee_id
 ORDER BY employee_id
+
+---------
+1789. Primary Department for Each Employee
+
+select employee_id ,
+department_id
+from employee
+where primary_flag='Y'
+
+UNION 
+SELECT employee_id ,
+department_id
+FROM 
+EMPLOYEE 
+group by employee_id
+HAVING COUNT(employee_id) =1
