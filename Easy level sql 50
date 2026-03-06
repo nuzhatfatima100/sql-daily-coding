@@ -43,3 +43,13 @@ select activity_date as day, count(distinct user_id) as active_users
 from activity 
 where activity_date > '2019-06-27' AND activity_date <= '2019-07-27' 
 group by activity_date
+
+---------
+
+1158. Market Analysis I
+
+select u.user_id as buyer_id,join_date ,count(order_id) as orders_in_2019
+from users u left join orders o 
+on u.user_id=o.buyer_id  and year(order_date)='2019'
+group by u.user_id
+order by u.user_id
