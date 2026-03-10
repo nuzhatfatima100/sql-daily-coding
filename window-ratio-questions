@@ -23,3 +23,11 @@ SELECT
   ROUND(salary * 1.0 / AVG(salary) OVER (PARTITION BY dept), 2) AS ratio_to_dept_avg
 FROM employees
 ORDER BY dept, salary DESC;
+
+
+Q3. Product Revenue Share
+Return each product's revenue and its percentage share of the total revenue across all products. Round to 2 decimal places.
+
+select product,revenue, round(revenue*100.0/sum(revenue) over (),2) as pct_of_total 
+from products 
+order by revenue desc
