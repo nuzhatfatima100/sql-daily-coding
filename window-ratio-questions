@@ -31,3 +31,18 @@ Return each product's revenue and its percentage share of the total revenue acro
 select product,revenue, round(revenue*100.0/sum(revenue) over (),2) as pct_of_total 
 from products 
 order by revenue desc
+
+
+Q4. Running Total as % of Grand Total
+Compute the cumulative (running) sum of transactions ordered by date, and show it as a percentage of the overall total. Round to 2 decimal places.
+
+SELECT
+  txn_date,
+  amount,
+  SUM(amount) OVER (ORDER BY txn_date) AS running_total,
+  ROUND(
+    SUM(amount) OVER (ORDER BY txn_date)
+    * 100.0 / SUM(amount) OVER (),
+  2) AS running_pct
+FROM transactions
+ORDER BY txn_date;
