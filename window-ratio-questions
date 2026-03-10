@@ -23,7 +23,7 @@ SELECT
   ROUND(salary * 1.0 / AVG(salary) OVER (PARTITION BY dept), 2) AS ratio_to_dept_avg
 FROM employees
 ORDER BY dept, salary DESC;
-
+--------------
 
 Q3. Product Revenue Share
 Return each product's revenue and its percentage share of the total revenue across all products. Round to 2 decimal places.
@@ -31,6 +31,31 @@ Return each product's revenue and its percentage share of the total revenue acro
 select product,revenue, round(revenue*100.0/sum(revenue) over (),2) as pct_of_total 
 from products 
 order by revenue desc
+-------------
+Q4. Running Total as % of Grand Total
+Compute the cumulative (running) sum of transactions ordered by date, and show it as a percentage of the overall total. Round to 2 decimal places.
+SELECT
+  txn_date,
+  amount,
+  SUM(amount) OVER (ORDER BY txn_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total,
+  ROUND(
+    SUM(amount) OVER (ORDER BY txn_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+    * 100.0 / SUM(amount) OVER (),
+  2) AS running_pct
+FROM transactions
+ORDER BY txn_date;
+--------------
+Q5. Month-over-Month Sales Ratio
+Compute the ratio of each month's total sales to the previous month's sales (MoM ratio). A value of 1.15 means 15% growth. Show NULL for the first month.
+SELECT
+  month,
+  total_sales,
+  LAG(total_sales) OVER (ORDER BY month) AS prev_month_sales,
+  ROUND(
+    total_sales * 1.0 / LAG(total_sales) OVER (ORDER BY month),
+  2) AS mom_ratio
+FROM monthly_sales
+ORDER BY month;
 
 
 Q4. Running Total as % of Grand Total
@@ -46,3 +71,18 @@ SELECT
   2) AS running_pct
 FROM transactions
 ORDER BY txn_date;
+
+---------
+Q6. % of Category Leader
+For each product, show its revenue and what percentage of the top-ranked product's revenue (within its category) it represents. Round to 2 decimal places.
+
+SELECT
+  category,
+  product_name,
+  revenue,
+  FIRST_VALUE(revenue) OVER (PARTITION BY category ORDER BY revenue DESC) AS category_leader_revenue,
+  ROUND(
+    revenue * 100.0 / FIRST_VALUE(revenue) OVER (PARTITION BY category ORDER BY revenue DESC),
+  2) AS pct_of_leader
+FROM products
+ORDER BY category, revenue DESC;
