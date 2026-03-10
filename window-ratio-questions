@@ -1,0 +1,25 @@
+Q1. Sales % by Region
+Show each salesperson's sale amount and what percentage of their region's total sales they contributed. Round the percentage to 2 decimal places.
+SELECT
+  region,
+  salesperson,
+  amount,
+  ROUND(amount * 100.0 / SUM(amount) OVER (PARTITION BY region), 2) AS pct_of_region
+FROM sales
+ORDER BY region, amount DESC;
+
+
+
+
+
+
+Q2. Salary Ratio to Dept Avg
+For each employee, show their salary and their ratio to the department average. A ratio of 1.2 means 20% above the department average. Round to 2 decimals.
+
+SELECT
+  dept,
+  name,
+  salary,
+  ROUND(salary * 1.0 / AVG(salary) OVER (PARTITION BY dept), 2) AS ratio_to_dept_avg
+FROM employees
+ORDER BY dept, salary DESC;
