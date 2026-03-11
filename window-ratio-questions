@@ -86,3 +86,18 @@ SELECT
   2) AS pct_of_leader
 FROM products
 ORDER BY category, revenue DESC;
+
+----------
+Q7. Dept Headcount as % of Company
+At the individual employee row level, show each employee's name, their department, and their department's headcount as a percentage of the total company headcount. Round to 2 decimal places.
+
+SELECT
+  name,
+  dept,
+  COUNT(*) OVER (PARTITION BY dept) AS dept_headcount,
+  COUNT(*) OVER () AS total_headcount,
+  ROUND(
+    COUNT(*) OVER (PARTITION BY dept) * 100.0 / COUNT(*) OVER (),
+  2) AS dept_pct_of_company
+FROM employees
+ORDER BY dept, name;
