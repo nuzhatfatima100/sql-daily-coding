@@ -32,3 +32,27 @@ select sale_date,amount,  sum(amount) over (order by sale_date) as running_total
 sum(amount) over () as grand_total
 , round(sum(amount) over (order by sale_date)*100.0/sum(amount) over (),2) as pct_running_total
 from daily_sales
+-------
+ 3-Day Rolling Average
+From daily_sales, compute a 3-day rolling average of the amount (current day + 2 preceding days). Show: sale_date, amount, and rolling_avg_3d. Round to 2 decimal places.
+
+💡 Hint
+⚡ ROWS BETWEEN N PRECEDING
+
+select sale_date, amount,
+round(avg(amount) over (order by sale_date rows between 2 preceding and current row),2) as rolling_avg_3d
+from daily_sales 
+
+SQL
+ROWS BETWEEN [start] AND [end]
+Commonly used boundaries include:
+
+UNBOUNDED PRECEDING: From the very first row of the partition.
+
+UNBOUNDED FOLLOWING: To the very last row of the partition.
+
+CURRENT ROW: The row currently being processed.
+
+N PRECEDING: N rows before the current row.
+
+N FOLLOWING: N rows after the current row.
