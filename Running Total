@@ -20,3 +20,15 @@ select *, sum(amount) over (PARTITION BY strftime('%Y-%m', txn_date)
     ORDER BY txn_date
   ) as monthly_running_total
 from transactions
+
+-------
+ Running Total as % of Final Total
+From daily_sales, show each day's running total and what percentage of the grand total has been reached by that day. Round the percentage to 2 decimal places.
+
+💡 Hint
+⚡ Running SUM ÷ Grand Total
+
+select sale_date,amount,  sum(amount) over (order by sale_date) as running_total,
+sum(amount) over () as grand_total
+, round(sum(amount) over (order by sale_date)*100.0/sum(amount) over (),2) as pct_running_total
+from daily_sales
