@@ -1,0 +1,22 @@
+Running Total per Category
+From the category_sales table, compute a running total of amount within each category separately, ordered by sale_date. Show: category, sale_date, amount, and running_total.
+
+select category, sale_date, sum(amount) over 
+(partition by category order by sale_date) as running_total_amount
+from category_sales
+
+------
+Q4. Running Max Salary
+From the employees table, ordered by hire_date, show the highest salary seen so far at each point (running maximum). Show: hire_date, name, salary, and running_max_salary.
+
+select hire_date,name,salary,max(salary) over (order by hire_date) as running_max_salary
+from employees
+--------
+Q5. Running Total Reset per Month
+From the transactions table, compute a running total of amount that resets at the start of each month. Show: txn_date, amount, and monthly_running_total
+
+
+select *, sum(amount) over (PARTITION BY strftime('%Y-%m', txn_date) 
+    ORDER BY txn_date
+  ) as monthly_running_total
+from transactions
