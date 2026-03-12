@@ -54,8 +54,32 @@ From daily_sales, compute a 3-day rolling average of the amount (current day + 2
 
 select sale_date, amount,
 round(avg(amount) over (order by sale_date rows between 2 preceding and current row),2) as rolling_avg_3d
-from daily_sales 
+from daily_sales
+----------
+ Running Diff from First Value
 
+From monthly_sales, show how much each month's total_sales differs from the very first month's sales (as a cumulative drift). Show: month, total_sales, first_month_sales, and drift.
+
+💡 Hint
+⚡ FIRST_VALUE() anchor
+
+select month, total_sales ,
+first_value(total_sales) over (order by month) as first_month_sales,
+total_sales-first_value(total_sales) over (order by month) as drift
+from monthly_sales
+-------------
+Flag When Running Total Crosses 10,000
+From daily_sales, flag each row with 1 if the running total has reached or exceeded 10,000 by that day, otherwise 0. Show: sale_date, amount, running_total, and crossed_10k.
+
+💡 Hint
+⚡ CASE + Window Function
+
+with cte as(select *, 
+sum(amount) over (order by sale_date) as running_total
+from daily_sales)
+select *, case when running_total>=10000 then 1 else 0 end as flag
+from cte
+==============================
 SQL
 ROWS BETWEEN [start] AND [end]
 Commonly used boundaries include:
