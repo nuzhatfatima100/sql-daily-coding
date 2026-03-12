@@ -1,3 +1,16 @@
+SUM() OVER
+PARTITION BY
+ROWS BETWEEN
+FIRST_VALUE
+AVG() OVER
+CASE + Window
+===================
+
+
+
+
+
+
 Running Total per Category
 From the category_sales table, compute a running total of amount within each category separately, ordered by sale_date. Show: category, sale_date, amount, and running_total.
 
