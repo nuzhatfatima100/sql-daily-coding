@@ -1,0 +1,5 @@
+Find users who Viewed a product BEFORE Purchasing it.
+
+select user_id from events
+group by user_id
+having min(case when event='View' then ts end)<min(case when event='buy' then ts end)
