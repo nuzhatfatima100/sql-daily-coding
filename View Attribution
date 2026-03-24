@@ -115,3 +115,59 @@ INNER JOIN first_visits f
  AND v.visit_date = f.first_date
 ORDER BY v.user_id;
 
+-----------
+High Value Segments
+MEDIUM
+Classify each user as 'High' (total spend > 1000), 'Mid' (500–1000), or 'Low' (< 500). Show user_id, total_spend, and segment.
+
+▼
+TABLE SCHEMA — click to view
+purchases( user_id INT, amount REAL )
+Sample Input
+user_id	amount
+1	600
+1	500
+2	300
+2	100
+3	200
+3	900
+Expected Output
+user_id	total_spend	segment
+1	1100	High
+2	400	Low
+3	1100	High
+
+select user_id, sum(amount) as total_spend, 
+case when sum(amount) > 1000 then 'High' 
+when sum(amount) >500 and sum(amount)<1000 then 'Mid' 
+when sum(amount)<500 then 'Low' end as segment
+from purchases 
+group by user_id
+order by user_id
+
+-----------------
+Bounce Detection
+MEDIUM
+A 'bounce' is a session with only ONE event. Find all session_ids where the user bounced (exactly 1 event), and show the single event type.
+
+▼
+TABLE SCHEMA — click to view
+sessions( session_id INT, user_id INT, event TEXT )
+Sample Input
+session_id	user_id	event
+1	1	View
+1	1	Click
+2	2	View
+3	3	View
+3	3	Buy
+Expected Output
+session_id	event
+2	View
+
+
+SELECT session_id, MIN(event) AS event
+FROM sessions
+GROUP BY session_id
+HAVING COUNT(*) = 1
+ORDER BY session_id;
+
