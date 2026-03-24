@@ -55,3 +55,29 @@ FROM sales
 GROUP BY product
 
 This is a classic pivot — use CASE inside SUM to route each row to the right column.
+
+-------------
+Refund Rate
+MEDIUM
+For each seller, calculate the refund rate: number of refunded orders divided by total orders. Round to 2 decimal places. Only show sellers with more than 1 order.
+
+▼
+TABLE SCHEMA — click to view
+orders( seller_id INT, order_id INT, status TEXT )
+Sample Input
+seller_id	order_id	status
+1	101	Completed
+1	102	Refunded
+1	103	Completed
+2	104	Refunded
+2	105	Refunded
+3	106	Completed
+Expected Output
+seller_id	refund_rate
+1	0.33
+2	1
+
+select seller_id, round(sum(case when status='Refunded' then 1.0 else 0 end)/count(*),2) as refund_rate
+from orders
+group by seller_id
+having count(order_id)>1
