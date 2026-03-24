@@ -81,3 +81,37 @@ select seller_id, round(sum(case when status='Refunded' then 1.0 else 0 end)/cou
 from orders
 group by seller_id
 having count(order_id)>1
+
+------------
+First Touch Channel
+MEDIUM
+For each user, find which marketing channel they came from on their VERY FIRST visit (earliest visit_date). Show user_id and first_channel.
+
+▼
+TABLE SCHEMA — click to view
+visits( user_id INT, channel TEXT, visit_date TEXT )
+Sample Input
+user_id	channel	visit_date
+1	Google	2024-01-01
+1	Facebook	2024-01-05
+2	Email	2024-01-02
+2	Google	2024-01-08
+3	Facebook	2024-01-03
+Expected Output
+user_id	first_channel
+1	Google
+2	Email
+3	Facebook
+
+WITH first_visits AS (
+  SELECT user_id, MIN(visit_date) AS first_date
+  FROM visits
+  GROUP BY user_id
+)
+SELECT v.user_id, v.channel AS first_channel
+FROM visits v
+INNER JOIN first_visits f
+  ON v.user_id = f.user_id
+ AND v.visit_date = f.first_date
+ORDER BY v.user_id;
+
