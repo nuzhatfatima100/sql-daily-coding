@@ -26,3 +26,32 @@ AND NOT EXISTS (
     WHERE s2.user_id = s1.user_id 
     AND s2.event = 'Cancel'
 );
+
+---------
+Revenue Pivot
+MEDIUM
+For each product, show total revenue split into 'Online' and 'Offline' channels as separate columns.
+
+▼
+TABLE SCHEMA — click to view
+sales( product TEXT, channel TEXT, revenue REAL )
+Sample Input
+product	channel	revenue
+Laptop	Online	500
+Laptop	Offline	300
+Phone	Online	400
+Phone	Online	200
+Phone	Offline	100
+Expected Output
+product	online_revenue	offline_revenue
+Laptop	500	300
+Phone	600	100
+
+
+SELECT product,
+SUM(CASE WHEN channel='Online' THEN revenue ELSE 0 END) AS online_revenue,
+SUM(CASE WHEN channel='Offline' THEN revenue ELSE 0 END) AS offline_revenue
+FROM sales
+GROUP BY product
+
+This is a classic pivot — use CASE inside SUM to route each row to the right column.
