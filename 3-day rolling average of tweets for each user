@@ -14,3 +14,6 @@ SELECT
     ORDER BY tweet_date
     ROWS BETWEEN 2 PRECEDING AND CURRENT ROW),2) AS rolling_avg_3d 
 FROM tweets;
+
+select user_id,tweet_date, round(avg(tweet_count) over (partition by user_id order by tweet_date rows between 2 preceding and current row),2) as rolling_avg
+from tweets
